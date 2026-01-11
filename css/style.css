@@ -41,6 +41,8 @@
 /* ==================== BASE STYLES ==================== */
 html {
     scroll-behavior: smooth;
+    scroll-padding-top: 100px;
+    /* Offset for sticky header */
 }
 
 body {
@@ -115,6 +117,29 @@ body {
 
 .site-nav a:hover::after {
     width: 80%;
+}
+
+.site-nav.scrolled {
+    padding: var(--spacing-xs);
+    background: rgba(0, 0, 0, 0.8);
+    /* Darker background for better contrast */
+    transition: all var(--transition-normal);
+}
+
+.site-nav.scrolled a {
+    padding: 4px 8px;
+    font-size: 0.9rem;
+}
+
+.site-nav.scrolled {
+    padding: var(--spacing-xs);
+    background: rgba(0, 0, 0, 0.8);
+    /* Darker background for better contrast */
+}
+
+.site-nav.scrolled a {
+    padding: 4px 8px;
+    font-size: 0.9rem;
 }
 
 .site-nav a.active {
@@ -337,6 +362,7 @@ section p {
     .site-nav {
         flex-wrap: wrap;
         gap: var(--spacing-sm);
+        /* Reverted: position relative removed to keep sticky behavior */
     }
 
     section {

@@ -70,7 +70,17 @@ function throttle(func, wait) {
 }
 
 // Add scroll event listener with throttling
-window.addEventListener('scroll', throttle(highlightNavOnScroll, 100));
+window.addEventListener('scroll', throttle(() => {
+    highlightNavOnScroll();
+
+    // Toggle scrolled class for shrinking nav
+    const nav = document.querySelector('.site-nav');
+    if (window.scrollY > 50) {
+        nav.classList.add('scrolled');
+    } else {
+        nav.classList.remove('scrolled');
+    }
+}, 100));
 
 // ==================== SECTION HOVER EFFECTS ====================
 // Enhanced hover effects for sections
