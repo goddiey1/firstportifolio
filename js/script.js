@@ -1,8 +1,41 @@
+// ==================== HAMBURGER MENU ====================
+const hamburger = document.querySelector('.hamburger');
+const navLinks = document.querySelector('.nav-links');
+const navLinksItems = document.querySelectorAll('.nav-link');
+
+// Toggle menu when hamburger is clicked
+hamburger.addEventListener('click', () => {
+    hamburger.classList.toggle('active');
+    navLinks.classList.toggle('active');
+
+    // Prevent body scroll when menu is open
+    document.body.style.overflow = navLinks.classList.contains('active') ? 'hidden' : 'auto';
+});
+
+// Close menu when a link is clicked
+navLinksItems.forEach(link => {
+    link.addEventListener('click', () => {
+        hamburger.classList.remove('active');
+        navLinks.classList.remove('active');
+        document.body.style.overflow = 'auto';
+    });
+});
+
+// Close menu when clicking outside
+document.addEventListener('click', (e) => {
+    if (!hamburger.contains(e.target) && !navLinks.contains(e.target)) {
+        hamburger.classList.remove('active');
+        navLinks.classList.remove('active');
+        document.body.style.overflow = 'auto';
+    }
+});
+
 // ==================== SMOOTH SCROLLING ====================
 // Add smooth scroll behavior to all navigation links
-const navLinks = document.querySelectorAll('.site-nav a');
+// Add smooth scroll behavior to all navigation links
+const navLinksAll = document.querySelectorAll('.site-nav a');
 
-navLinks.forEach(link => {
+navLinksAll.forEach(link => {
     link.addEventListener('click', function (e) {
         e.preventDefault();
 
@@ -25,7 +58,7 @@ navLinks.forEach(link => {
 
 // ==================== ACTIVE LINK MANAGEMENT ====================
 function updateActiveLink(activeLink) {
-    navLinks.forEach(link => link.classList.remove('active'));
+    navLinksAll.forEach(link => link.classList.remove('active'));
     activeLink.classList.add('active');
 }
 
@@ -48,7 +81,7 @@ function highlightNavOnScroll() {
     });
 
     // Update active navigation link
-    navLinks.forEach(link => {
+    navLinksAll.forEach(link => {
         link.classList.remove('active');
         if (link.getAttribute('href') === `#${current}`) {
             link.classList.add('active');
@@ -70,17 +103,7 @@ function throttle(func, wait) {
 }
 
 // Add scroll event listener with throttling
-window.addEventListener('scroll', throttle(() => {
-    highlightNavOnScroll();
-
-    // Toggle scrolled class for shrinking nav
-    const nav = document.querySelector('.site-nav');
-    if (window.scrollY > 50) {
-        nav.classList.add('scrolled');
-    } else {
-        nav.classList.remove('scrolled');
-    }
-}, 100));
+window.addEventListener('scroll', throttle(highlightNavOnScroll, 100));
 
 // ==================== SECTION HOVER EFFECTS ====================
 // Enhanced hover effects for sections
