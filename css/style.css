@@ -41,6 +41,8 @@
 /* ==================== BASE STYLES ==================== */
 html {
     scroll-behavior: smooth;
+    overflow-x: hidden;
+    /* Prevent horizontal scroll from off-screen menu */
 }
 
 body {
@@ -49,6 +51,8 @@ body {
     min-height: 100vh;
     line-height: 1.6;
     color: var(--text-dark);
+    overflow-x: hidden;
+    /* Double safety for mobile browsers */
 }
 
 /* ==================== HEADER ==================== */
