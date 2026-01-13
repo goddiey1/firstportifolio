@@ -144,6 +144,17 @@ sections.forEach(section => {
     section.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
     observer.observe(section);
 });
+const form = document.getElementById("contactForm");
+const email = document.getElementById("email");
+const error = document.getElementById("emailError");
+
+form.addEventListener("submit", e => {
+    if (!email.checkValidity()) {
+        e.preventDefault();
+        error.textContent = "Enter a valid email address.";
+        email.focus();
+    }
+});
 
 // ==================== DYNAMIC COPYRIGHT YEAR ====================
 // Update copyright year automatically

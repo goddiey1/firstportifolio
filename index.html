@@ -36,6 +36,8 @@
         </div>
     </nav>
 
+
+
     <main>
         <section id="about">
             <h2>About Me</h2>
@@ -79,22 +81,35 @@
         <section id="projects">
             <h2>Projects</h2>
 
-            <div class="project">
+            <div class="filter-controls">
+                <button data-filter="all" class="active">All</button>
+                <button data-filter="web">Web</button>
+                <button data-filter="data">Data</button>
+            </div>
+
+
+
+            <article class="project" data-category="web">
                 <h3>Portfolio Website</h3>
+
                 <p>
                     A responsive personal portfolio built with HTML, CSS, and JavaScript.
                     Features smooth scrolling, active navigation highlighting, and modern design patterns.
                 </p>
+
                 <div class="project-tags">
                     <span class="tag">HTML</span>
                     <span class="tag">CSS</span>
                     <span class="tag">JavaScript</span>
                 </div>
+
                 <div class="project-links">
                     <a href="#" class="btn btn-primary">Live Demo</a>
                     <a href="#" class="btn btn-secondary">View Code</a>
                 </div>
-            </div>
+            </article>
+
+
 
             <!-- Add more projects as you build them -->
         </section>
@@ -107,6 +122,12 @@
                 <p><strong>WhatsApp:</strong> <a
                         href="https://wa.me/254YOUR_NUMBER?text=Hi%20Godfrey!%20I%20found%20your%20portfolio."
                         target="_blank" class="whatsapp-link">💬 Chat on WhatsApp</a></p>
+                <form id="contactForm" novalidate>
+                    <label>Email</label>
+                    <input type="email" id="email" required>
+                    <small id="emailError"></small>
+                    <button>Send</button>
+                </form>
                 <!-- Add more contact methods as needed -->
                 <!-- <p><strong>GitHub:</strong> <a href="#" target="_blank">github.com/yourusername</a></p> -->
                 <!-- <p><strong>LinkedIn:</strong> <a href="#" target="_blank">linkedin.com/in/yourprofile</a></p> -->
@@ -119,6 +140,8 @@
     </footer>
 
     <script src="js/script.js"></script>
+
+
 </body>
 
 </html>
