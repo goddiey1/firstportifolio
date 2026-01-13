@@ -5,11 +5,14 @@ const navLinksItems = document.querySelectorAll('.nav-link');
 
 // Toggle menu when hamburger is clicked
 hamburger.addEventListener('click', () => {
-    hamburger.classList.toggle('active');
+    const isActive = hamburger.classList.toggle('active');
     navLinks.classList.toggle('active');
 
+    // Update aria-expanded
+    hamburger.setAttribute('aria-expanded', isActive);
+
     // Prevent body scroll when menu is open
-    document.body.style.overflow = navLinks.classList.contains('active') ? 'hidden' : 'auto';
+    document.body.style.overflow = isActive ? 'hidden' : 'auto';
 });
 
 // Close menu when a link is clicked
@@ -17,6 +20,7 @@ navLinksItems.forEach(link => {
     link.addEventListener('click', () => {
         hamburger.classList.remove('active');
         navLinks.classList.remove('active');
+        hamburger.setAttribute('aria-expanded', 'false');
         document.body.style.overflow = 'auto';
     });
 });
@@ -26,6 +30,17 @@ document.addEventListener('click', (e) => {
     if (!hamburger.contains(e.target) && !navLinks.contains(e.target)) {
         hamburger.classList.remove('active');
         navLinks.classList.remove('active');
+        hamburger.setAttribute('aria-expanded', 'false');
+        document.body.style.overflow = 'auto';
+    }
+});
+
+// Close menu on Escape key
+document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && navLinks.classList.contains('active')) {
+        hamburger.classList.remove('active');
+        navLinks.classList.remove('active');
+        hamburger.setAttribute('aria-expanded', 'false');
         document.body.style.overflow = 'auto';
     }
 });
@@ -105,17 +120,6 @@ function throttle(func, wait) {
 // Add scroll event listener with throttling
 window.addEventListener('scroll', throttle(highlightNavOnScroll, 100));
 
-// ==================== SECTION HOVER EFFECTS ====================
-// Enhanced hover effects for sections
-sections.forEach(section => {
-    section.addEventListener('mouseenter', function () {
-        this.style.backgroundColor = '#fafafa';
-    });
-
-    section.addEventListener('mouseleave', function () {
-        this.style.backgroundColor = '#ffffff';
-    });
-});
 
 // ==================== INTERSECTION OBSERVER FOR ANIMATIONS ====================
 // Add fade-in animation when sections come into view
@@ -157,43 +161,6 @@ document.querySelectorAll('a[href^="http"]').forEach(link => {
         link.setAttribute('rel', 'noopener noreferrer');
     }
 });
-
-// ==================== FORM VALIDATION (for future contact form) ====================
-// You can add this when you create a contact form
-function validateEmail(email) {
-    const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    return re.test(email);
-}
-
-// ==================== MOBILE MENU TOGGLE (if needed in future) ====================
-// Placeholder for mobile menu functionality
-function toggleMobileMenu() {
-    const nav = document.querySelector('.site-nav');
-    nav.classList.toggle('mobile-active');
-}
-
-// ==================== PERFORMANCE: LAZY LOAD IMAGES (for future use) ====================
-// When you add images to your projects
-function lazyLoadImages() {
-    const images = document.querySelectorAll('img[data-src]');
-
-    const imageObserver = new IntersectionObserver((entries, observer) => {
-        entries.forEach(entry => {
-            if (entry.isIntersecting) {
-                const img = entry.target;
-                img.src = img.dataset.src;
-                img.removeAttribute('data-src');
-                imageObserver.unobserve(img);
-            }
-        });
-    });
-
-    images.forEach(img => imageObserver.observe(img));
-}
-
-// Call lazy load when DOM is ready
-document.addEventListener('DOMContentLoaded', lazyLoadImages);
-
 // ==================== CONSOLE MESSAGE ====================
 // Fun easter egg for developers who inspect your site
 console.log('%c👋 Hello, Developer!', 'color: #667eea; font-size: 20px; font-weight: bold;');
