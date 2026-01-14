@@ -144,16 +144,74 @@ sections.forEach(section => {
     section.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
     observer.observe(section);
 });
+
+// ==================== PROJECT FILTERING ====================
+const filterButtons = document.querySelectorAll('.filter-controls button');
+const projects = document.querySelectorAll('.project');
+
+filterButtons.forEach(button => {
+    button.addEventListener('click', () => {
+        // Remove active class from all buttons
+        filterButtons.forEach(btn => {
+            btn.classList.remove('active');
+            btn.setAttribute('aria-pressed', 'false');
+        });
+
+        // Add active class to clicked button
+        button.classList.add('active');
+        button.setAttribute('aria-pressed', 'true');
+
+        const filter = button.dataset.filter;
+
+        projects.forEach(project => {
+            if (filter === 'all' || project.dataset.category === filter) {
+                project.removeAttribute('hidden');
+                // Optional: simple fade in
+                project.style.opacity = '1';
+                project.style.transform = 'translateY(0)';
+            } else {
+                project.setAttribute('hidden', '');
+                // Ensure it's visually hidden if CSS overrides [hidden]
+                project.style.opacity = '0';
+                project.style.transform = 'translateY(20px)';
+            }
+        });
+    });
+});
 const form = document.getElementById("contactForm");
 const email = document.getElementById("email");
-const error = document.getElementById("emailError");
+const emailError = document.getElementById("emailError");
 
-form.addEventListener("submit", e => {
+form.addEventListener("submit", (e) => {
+    e.preventDefault();
     if (!email.checkValidity()) {
-        e.preventDefault();
-        error.textContent = "Enter a valid email address.";
+        emailError.textContent = "Enter a valid email address.";
         email.focus();
+        return;
+    } else {
+        emailError.textContent = "";
     }
+
+    // Simulate submission
+    const btn = form.querySelector("button");
+    const originalText = btn.textContent;
+    btn.textContent = "Sending...";
+    btn.disabled = true;
+
+    setTimeout(() => {
+        btn.textContent = "✅ Message Sent!";
+        btn.style.backgroundColor = "#2ecc71";
+
+        // Reset form
+        form.reset();
+
+        // Reset button after 3 seconds
+        setTimeout(() => {
+            btn.textContent = originalText;
+            btn.disabled = false;
+            btn.style.backgroundColor = ""; // Reverts to CSS
+        }, 3000);
+    }, 2000);
 });
 
 // ==================== DYNAMIC COPYRIGHT YEAR ====================
